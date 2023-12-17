@@ -3,16 +3,26 @@ import { GoogleAuthProvider, User, signInWithPopup, signOut } from 'firebase/aut
 
 import './styles.scss';
 import { auth } from '../../services/firebase';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function SignIn() {
     const [user, setUser] = useState<User>({} as User);
     const provider = new GoogleAuthProvider();
 
+    useEffect(() => {
+        setUser(
+            JSON.parse(
+                sessionStorage.getItem('firebase:authUser:AIzaSyCu2DosavXUDAnpqnwUV8czymfYtLk155Q:[DEFAULT]') ||
+                JSON.stringify('')
+            )
+        );
+    }, []);
+
     function handleGoogleSignIn() {
 
         signInWithPopup(auth, provider)
             .then((result) => {
+                console.log(result);
                 setUser(result.user);
             })
             .catch((error) => {

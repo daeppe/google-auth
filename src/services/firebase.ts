@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 // import { getAnalytics } from 'firebase/analytics';
-import { getAuth } from 'firebase/auth';
+import { browserSessionPersistence, getAuth, setPersistence } from 'firebase/auth';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyCu2DosavXUDAnpqnwUV8czymfYtLk155Q',
@@ -14,4 +14,14 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
-export const auth = getAuth(app);
+const auth = getAuth(app);
+
+setPersistence(auth, browserSessionPersistence)
+    .then(() => {
+        console.log('Persistência definida como local.');
+    })
+    .catch((error) => {
+        console.error('Erro ao definir a persistência:', error);
+    });
+
+export { auth };
