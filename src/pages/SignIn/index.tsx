@@ -1,5 +1,5 @@
 import { GoogleLogo } from '@phosphor-icons/react';
-import { GoogleAuthProvider, User, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, User, signInWithPopup, signOut } from 'firebase/auth';
 
 import './styles.scss';
 import { auth } from '../../services/firebase';
@@ -7,9 +7,9 @@ import { useState } from 'react';
 
 export function SignIn() {
     const [user, setUser] = useState<User>({} as User);
+    const provider = new GoogleAuthProvider();
 
     function handleGoogleSignIn() {
-        const provider = new GoogleAuthProvider();
 
         signInWithPopup(auth, provider)
             .then((result) => {
@@ -18,6 +18,11 @@ export function SignIn() {
             .catch((error) => {
                 console.log(error);
             });
+    }
+
+    function handleGoogleSignOut() {
+        signOut(auth);
+        window.location.reload();
     }
 
     return (
@@ -39,6 +44,8 @@ export function SignIn() {
                 <GoogleLogo />
                 Entrar com o google!
             </button>
+
+            <button type='button' className='button' onClick={handleGoogleSignOut}>LogOut</button>
         </div>
     );
 }
