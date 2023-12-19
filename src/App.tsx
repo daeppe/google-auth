@@ -1,10 +1,10 @@
-import { SignIn } from './pages/SignIn'
-import './styles/global.scss'
+import { Router } from './routes';
+import './styles/global.scss';
 function App() {
 
   return (
-    <SignIn />
-  )
+    <Router />
+  );
 }
 
-export default App
+export default App;
