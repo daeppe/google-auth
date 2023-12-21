@@ -4,6 +4,7 @@ import { PageNotAllowed } from '../pages/PageNotAllowed';
 import { AllowedPage } from '../pages/AllowedPage';
 
 export function Router() {
+
     return (
         <BrowserRouter>
             <Routes>
