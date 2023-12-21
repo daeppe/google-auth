@@ -1,5 +1,7 @@
+import { AuthProvider } from './Auth/AuthProvider';
+
 export function Providers({ children }: { children: JSX.Element }) {
     return (
-        <>{children}</>
+        <AuthProvider>{children}</AuthProvider>
     );
 }

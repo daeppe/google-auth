@@ -1,33 +1,22 @@
 import { GoogleLogo } from '@phosphor-icons/react';
-import { GoogleAuthProvider, User, signInWithPopup, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 
 import './styles.scss';
 import { auth } from '../../services/firebase';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
+import { AuthContext } from '../../context/Auth/AuthContext';
 
 export function SignIn() {
-    const [user, setUser] = useState<User>({} as User);
-    const provider = new GoogleAuthProvider();
+    const authContext = useContext(AuthContext);
+    const user = authContext.user;
 
     useEffect(() => {
-        setUser(
-            JSON.parse(
-                sessionStorage.getItem('firebase:authUser:AIzaSyCu2DosavXUDAnpqnwUV8czymfYtLk155Q:[DEFAULT]') ||
-                JSON.stringify('')
-            )
-        );
-    }, []);
+        authContext.login();
+    }, [authContext]);
 
     function handleGoogleSignIn() {
+        authContext.login();
 
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                console.log(result);
-                setUser(result.user);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
     }
 
     function handleGoogleSignOut() {
